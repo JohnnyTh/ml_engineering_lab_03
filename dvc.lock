@@ -1,0 +1,19 @@
+schema: '2.0'
+stages:
+  download_and_extract:
+    cmd: python download_data.py
+    params:
+      params.yaml:
+        images_dir: images
+        labels_dir: labels
+    outs:
+    - path: images
+      hash: md5
+      md5: a0449cfa1b8eceb5c25fee9b868938b8.dir
+      size: 346809251
+      nfiles: 8189
+    - path: labels
+      hash: md5
+      md5: 320f29b8d24b5b589814d074931512e1.dir
+      size: 502
+      nfiles: 1

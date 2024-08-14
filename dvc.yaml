@@ -1,0 +1,9 @@
+stages:
+  download_and_extract:
+    cmd: python download_data.py
+    params:
+      - images_dir
+      - labels_dir
+    outs:
+      - "${images_dir}"
+      - "${labels_dir}"
