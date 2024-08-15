@@ -2,6 +2,11 @@ schema: '2.0'
 stages:
   download_and_extract:
     cmd: python download_data.py
+    deps:
+    - path: download_data.py
+      hash: md5
+      md5: 81b0f5c6b6a2fd662eac9cb72f2cc3ac
+      size: 3026
     params:
       params.yaml:
         images_dir: images
@@ -32,6 +37,10 @@ stages:
       md5: 320f29b8d24b5b589814d074931512e1.dir
       size: 502
       nfiles: 1
+    - path: process_data.py
+      hash: md5
+      md5: 64257f9029fbd223419241d1c3b0d940
+      size: 6393
     params:
       params.yaml:
         batch_names_select:
@@ -60,14 +69,14 @@ stages:
   train:
     cmd: python train.py
     deps:
-    - path: test.csv
-      hash: md5
-      md5: 26b740bc29e0da30872419a317a046fa
-      size: 129049
     - path: train.csv
       hash: md5
       md5: 26cb3821b572f40c9266495948be2c3f
       size: 141298
+    - path: train.py
+      hash: md5
+      md5: 0a6361b825cbef36b8a35b999382d56c
+      size: 3033
     - path: val.csv
       hash: md5
       md5: b146477d78c8b6603378289fa9ed9aea
@@ -79,5 +88,23 @@ stages:
     outs:
     - path: best_model.pth
       hash: md5
-      md5: eaf13f3e8887fcefc72cb8bf24f2ed12
+      md5: c79bd6239cc9ebebeab18ef63eaf853a
       size: 1259496
+  test:
+    cmd: python test.py
+    deps:
+    - path: best_model.pth
+      hash: md5
+      md5: c79bd6239cc9ebebeab18ef63eaf853a
+      size: 1259496
+    - path: test.csv
+      hash: md5
+      md5: 26b740bc29e0da30872419a317a046fa
+      size: 129049
+    - path: test.py
+      hash: md5
+      md5: ed9dc3779401830975c0b9e3364f24db
+      size: 1706
+    params:
+      params.yaml:
+        model_save_path: best_model.pth

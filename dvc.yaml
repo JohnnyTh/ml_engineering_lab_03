@@ -1,6 +1,8 @@
 stages:
   download_and_extract:
     cmd: python download_data.py
+    deps:
+      - download_data.py
     params:
       - images_dir
       - labels_dir
@@ -15,6 +17,7 @@ stages:
     deps:
       - "${images_dir}"
       - "${labels_dir}"
+      - process_data.py
     outs:
       - "${train_split_path}"
       - "${val_split_path}"
@@ -34,9 +37,18 @@ stages:
     deps:
       - "${train_split_path}"
       - "${val_split_path}"
-      - "${test_split_path}"
+      - train.py
     params:
       - model_save_path
       - lr
     outs:
       - "${model_save_path}"
+
+  test:
+    cmd: python test.py
+    deps:
+      - "${model_save_path}"
+      - "${test_split_path}"
+      - test.py
+    params:
+      - model_save_path
