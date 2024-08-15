@@ -1,2 +1,5 @@
 /images
 /labels
+/train.csv
+/val.csv
+/test.csv

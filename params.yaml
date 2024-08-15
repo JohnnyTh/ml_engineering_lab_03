@@ -1,2 +1,19 @@
+images_url: "https://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz"
+labels_url: "https://www.robots.ox.ac.uk/~vgg/data/flowers/102/imagelabels.mat"
+
 images_dir: images
 labels_dir: labels
+
+train_split_path: "train.csv"
+val_split_path: "val.csv"
+test_split_path: "test.csv"
+
+test_size: 0.2
+val_size: 0.2
+
+random_state: 42
+
+n_batches: 6
+batch_names_select: ["0", "1"]
+
+lr: 0.001

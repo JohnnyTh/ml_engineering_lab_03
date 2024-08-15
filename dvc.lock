@@ -5,7 +5,9 @@ stages:
     params:
       params.yaml:
         images_dir: images
+        images_url: https://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz
         labels_dir: labels
+        labels_url: https://www.robots.ox.ac.uk/~vgg/data/flowers/102/imagelabels.mat
     outs:
     - path: images
       hash: md5
@@ -17,3 +19,41 @@ stages:
       md5: 320f29b8d24b5b589814d074931512e1.dir
       size: 502
       nfiles: 1
+  process_data:
+    cmd: python process_data.py
+    deps:
+    - path: images
+      hash: md5
+      md5: a0449cfa1b8eceb5c25fee9b868938b8.dir
+      size: 346809251
+      nfiles: 8189
+    - path: labels
+      hash: md5
+      md5: 320f29b8d24b5b589814d074931512e1.dir
+      size: 502
+      nfiles: 1
+    params:
+      params.yaml:
+        batch_names_select:
+        - '0'
+        - '1'
+        n_batches: 6
+        random_state: 42
+        test_size: 0.2
+        test_split_path: test.csv
+        train_split_path: train.csv
+        val_size: 0.2
+        val_split_path: val.csv
+    outs:
+    - path: test.csv
+      hash: md5
+      md5: 26b740bc29e0da30872419a317a046fa
+      size: 129049
+    - path: train.csv
+      hash: md5
+      md5: 26cb3821b572f40c9266495948be2c3f
+      size: 141298
+    - path: val.csv
+      hash: md5
+      md5: b146477d78c8b6603378289fa9ed9aea
+      size: 35271

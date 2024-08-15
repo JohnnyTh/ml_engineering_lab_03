@@ -1,6 +1,5 @@
 import zipfile
 import tarfile
-import argparse
 import yaml
 
 import logging
@@ -8,6 +7,8 @@ import requests
 
 from pathlib import Path
 from typing import Optional
+
+logging.basicConfig(level=logging.INFO)
 
 
 def download_and_extract(url: str, save_dir: str, filename: Optional[str] = None) -> str:
@@ -39,27 +40,27 @@ def download_and_extract(url: str, save_dir: str, filename: Optional[str] = None
         try:
             response = requests.get(url)
             response.raise_for_status()
-            with open(file_path, 'wb') as f:
+            with open(file_path, "wb") as f:
                 f.write(response.content)
             logging.info(f"Download successful. File saved to: '{file_path}'")
 
             # Extract the file if it's an archive
             if filename.endswith(".zip"):
-                with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                with zipfile.ZipFile(file_path, "r") as zip_ref:
                     zip_ref.extractall(save_path)
                 file_path.unlink()
                 result_path = str(save_path)
             elif (
-                    filename.endswith(".tar.gz")
-                    or filename.endswith(".tgz")
-                    or filename.endswith(".gz")
+                filename.endswith(".tar.gz")
+                or filename.endswith(".tgz")
+                or filename.endswith(".gz")
             ):
-                with tarfile.open(file_path, 'r:gz') as tar_ref:
+                with tarfile.open(file_path, "r:gz") as tar_ref:
                     tar_ref.extractall(save_path)
                 file_path.unlink()
                 result_path = str(save_path)
             elif filename.endswith(".tar"):
-                with tarfile.open(file_path, 'r') as tar_ref:
+                with tarfile.open(file_path, "r") as tar_ref:
                     tar_ref.extractall(save_path)
                 file_path.unlink()
                 result_path = str(save_path)
@@ -77,15 +78,12 @@ def download_and_extract(url: str, save_dir: str, filename: Optional[str] = None
 
 
 def main() -> None:
-    images_url = 'https://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz'
-    labels_url = 'https://www.robots.ox.ac.uk/~vgg/data/flowers/102/imagelabels.mat'
-
     with open("params.yaml", "r") as file:
-        params = yaml.safe_load(file)
+        config = yaml.safe_load(file)
 
-    download_and_extract(images_url, params["images_dir"])
-    download_and_extract(labels_url, params["labels_dir"])
+    download_and_extract(config["images_url"], config["images_dir"])
+    download_and_extract(config["labels_url"], config["labels_dir"])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

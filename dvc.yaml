@@ -4,6 +4,27 @@ stages:
     params:
       - images_dir
       - labels_dir
+      - labels_url
+      - images_url
     outs:
       - "${images_dir}"
       - "${labels_dir}"
+
+  process_data:
+    cmd: python process_data.py
+    deps:
+      - "${images_dir}"
+      - "${labels_dir}"
+    outs:
+      - "${train_split_path}"
+      - "${val_split_path}"
+      - "${test_split_path}"
+    params:
+      - train_split_path
+      - val_split_path
+      - test_split_path
+      - random_state
+      - test_size
+      - val_size
+      - n_batches
+      - batch_names_select
