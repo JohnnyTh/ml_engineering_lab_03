@@ -28,3 +28,15 @@ stages:
       - val_size
       - n_batches
       - batch_names_select
+
+  train:
+    cmd: python train.py
+    deps:
+      - "${train_split_path}"
+      - "${val_split_path}"
+      - "${test_split_path}"
+    params:
+      - model_save_path
+      - lr
+    outs:
+      - "${model_save_path}"

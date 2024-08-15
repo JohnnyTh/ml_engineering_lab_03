@@ -3,3 +3,4 @@
 /train.csv
 /val.csv
 /test.csv
+/best_model.pth

@@ -57,3 +57,27 @@ stages:
       hash: md5
       md5: b146477d78c8b6603378289fa9ed9aea
       size: 35271
+  train:
+    cmd: python train.py
+    deps:
+    - path: test.csv
+      hash: md5
+      md5: 26b740bc29e0da30872419a317a046fa
+      size: 129049
+    - path: train.csv
+      hash: md5
+      md5: 26cb3821b572f40c9266495948be2c3f
+      size: 141298
+    - path: val.csv
+      hash: md5
+      md5: b146477d78c8b6603378289fa9ed9aea
+      size: 35271
+    params:
+      params.yaml:
+        lr: 0.001
+        model_save_path: best_model.pth
+    outs:
+    - path: best_model.pth
+      hash: md5
+      md5: eaf13f3e8887fcefc72cb8bf24f2ed12
+      size: 1259496

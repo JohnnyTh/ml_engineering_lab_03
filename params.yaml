@@ -17,3 +17,4 @@ n_batches: 6
 batch_names_select: ["0", "1"]
 
 lr: 0.001
+model_save_path: "best_model.pth"
